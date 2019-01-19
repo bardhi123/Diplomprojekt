@@ -1,0 +1,5 @@
+{% if user.is_authenticated and user.is_staff%}
+  Here you create new tournaments
+{% elif  user.is_authenticated and not user.is_staff %}
+    Here you sign up for possible tournaments
+{% endif %}
