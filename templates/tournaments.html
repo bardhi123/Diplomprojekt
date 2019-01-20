@@ -1,5 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
 {% if user.is_authenticated and user.is_staff%}
-  Here you create new tournaments
+ <h2> Here you create new tournaments </h2> <br>
+  {% for participation in participations %}
+        <h4>{{ participation.player.first_name }} {{ participation.player.last_name }}
+            participates in {{ participation.tournament.name }}</h4>
+  {% endfor %}
 {% elif  user.is_authenticated and not user.is_staff %}
-    Here you sign up for possible tournaments
+    Here you sign up for possible tournaments <br>
+    {% for tournament in tournaments %}
+        <h1>{{ tournament.name }}</h1>
+        <h1>{{ tournament.description }}</h1>
+    {% endfor %}
 {% endif %}
+{% endblock %}

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    #'crispy_forms'
 
     # 3rd party
     'allauth',
@@ -48,6 +49,8 @@ INSTALLED_APPS = [
     #Local
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',
+    'tournaments.apps.TournamentsConfig',
+    'participations.apps.ParticipationsConfig',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -151,3 +154,5 @@ ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# CRIPSY_TEMPLATE_PACK = 'bootstrap4'
