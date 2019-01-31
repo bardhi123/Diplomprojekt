@@ -23,18 +23,10 @@
 
     {% endfor %}
 {% elif  user.is_authenticated and not user.is_staff %}
-    Here you sign up for possible tournaments <br>
-    <table>
-        <tr>
-            <td>Name</td>
-            <td>Description</td>
-        </tr>
-        {% for tournament in tournaments %}
-            <tr>
-                <td> <a class="article-title" href="{% url 'tournament_detail' tournament.id %}"> {{ tournament.name }} </a></td>
-                <td> - {{ tournament.description }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    <h1>Here you sign up for possible tournaments</h1>
+    {% for tournament in tournaments %}
+        <h2><a class="article-title" href="{% url 'tournament_detail' tournament.id %}"> {{ tournament.name }} </a></h2>
+        <h4> - {{ tournament.description }}</h4>
+    {% endfor %}
 {% endif %}
 {% endblock %}

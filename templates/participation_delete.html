@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h2>Quit Tournament</h2>
+<form method="post">
+  {% csrf_token %}
+    <h4>Are you sure you want to quit the tournament</h4>
+  <button class= "btn btn-outline-danger" type="submit">Yes, quit</button>
+  <a class= "btn btn-outline-secondary" href="{% url 'tournament_detail' object.tournament.id%}">Cancel</a>
+</form>
+
+{% endblock %}

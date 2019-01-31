@@ -1,11 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if user.is_authenticated%}
     <h2> Tournament Detail: {{ object.name}} </h2> <br>
-        <h4> {{ object.description }}, {{ object.tourn_date }}</h4>
-    {% endif %}
+    <h4> {{ object.description }}, {{ object.tourn_date }}</h4>
     {% comment %} {% if object.author == user %} {% endcomment %}
-    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'tournament_update' object.id %}">Update</a>
-    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'tournament_delete' object.id %}">Delete</a>
+    {% if user.is_staff %}
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'tournament_update' object.id %}">Update</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'tournament_delete' object.id %}">Delete</a>
+    {% else %}
+        {% for participation in participations %}
+            <h4>You are participating in this tournament, your Handicap is {{ participation.handicap }}</h4>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'participation_update' participation.id %}">Change your Handicap</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'participation_delete' participation.id %}">Quit</a>
+        {% empty %}
+            <a class="btn btn-info btn-sm mt-1 mb-1" href="{% url 'participation_form' object.id%}">Participate</a>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

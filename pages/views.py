@@ -26,8 +26,16 @@ class TournamentListView(LoginRequiredMixin, ListView):
         return context
 
 class TournamentDetailView(LoginRequiredMixin, DetailView):
-    model = Tournament
     template_name = 'tournament_detail.html'
+    context_object_name = 'tournaments'
+
+    def get_queryset(self):
+        return Tournament.objects.all().order_by('-tourn_date')
+
+    def get_context_data(self, **kwargs):
+        context = super(TournamentDetailView, self).get_context_data(**kwargs)
+        context['participations'] = Participation.objects.filter(tournament=self.kwargs.get('pk'), player=self.request.user)
+        return context
 
 class TournamentCreateView(LoginRequiredMixin, CreateView):
     model = Tournament
@@ -60,3 +68,26 @@ class TournamentDeleteView(LoginRequiredMixin, DeleteView):
             if self.request.user == tournament.author:
                 return True
             return False"""
+
+class ParticipationCreateView(LoginRequiredMixin, CreateView):
+    model = Participation
+    template_name = 'participation_form.html'
+    fields = ['handicap']
+    success_url = '/tournaments'
+
+    def form_valid(self, form):
+        tour = Tournament.objects.filter(id=self.kwargs.get('pk'))
+        form.instance.player = self.request.user
+        form.instance.tournament = tour.first()
+        return super().form_valid(form)
+
+class ParticipationUpdateView(LoginRequiredMixin, UpdateView): #(LoginRequiredMixin, UserPassesTestMixin, UpdateView)
+    model = Participation
+    template_name = 'participation_update.html'
+    fields = ['handicap']
+    success_url = '/tournaments'
+
+class ParticipationDeleteView(LoginRequiredMixin, DeleteView):
+    model = Participation
+    template_name = 'participation_delete.html'
+    success_url = '/tournaments'

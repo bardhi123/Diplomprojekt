@@ -8,6 +8,7 @@ class Participation (models.Model):
     player = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     date_joined = models.DateField(blank=True, default=timezone.now)
+    handicap = models.IntegerField(null=True)
 
     def __str__(self):
         return str(self.id)

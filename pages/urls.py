@@ -1,6 +1,14 @@
 from django.urls import path
 
-from .views import home, TournamentDetailView, TournamentListView, TournamentCreateView, TournamentUpdateView, TournamentDeleteView
+from .views import (home,
+                    TournamentDetailView,
+                    TournamentListView,
+                    TournamentCreateView,
+                    TournamentUpdateView,
+                    TournamentDeleteView,
+                    ParticipationCreateView,
+                    ParticipationDeleteView,
+                    ParticipationUpdateView)
 
 urlpatterns = [
     path('', home, name='home'),
@@ -9,4 +17,7 @@ urlpatterns = [
     path('tournaments/<int:pk>/', TournamentDetailView.as_view(), name='tournament_detail'),
     path('tournaments/<int:pk>/update', TournamentUpdateView.as_view(), name='tournament_update'),
     path('tournaments/<int:pk>/delete', TournamentDeleteView.as_view(), name='tournament_delete'),
+    path('tournaments/<int:pk>/participate', ParticipationCreateView.as_view(), name='participation_form'),
+    path('tournaments/<int:pk>/quit', ParticipationDeleteView.as_view(), name='participation_delete'),
+    path('tournaments/<int:pk>/changeHC', ParticipationUpdateView.as_view(), name='participation_update'),
 ]

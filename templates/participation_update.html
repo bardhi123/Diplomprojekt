@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h2>Handicap</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class= "btn btn-outline-info" href="{% url 'tournament_detail' object.tournament.id%}" type="submit">Update</button>
+  <a class= "btn btn-outline-secondary" href="{% url 'tournament_detail' object.tournament.id%}">Cancel</a>
+</form>
+
+{% endblock %}
