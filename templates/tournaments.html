@@ -2,16 +2,39 @@
 
 {% block content %}
 {% if user.is_authenticated and user.is_staff%}
- <h2> Here you create new tournaments </h2> <br>
-  {% for participation in participations %}
-        <h4>{{ participation.player.first_name }} {{ participation.player.last_name }}
-            participates in {{ participation.tournament.name }}</h4>
+ <h2> Here you create new tournaments </h2>
+    {% comment %}
+  {% regroup participations by tournament as o_participations%}
+  {% for participation in o_participations %}
+      <h3> <a class="article-title" href="{% url 'tournament_detail' participation.grouper.id %}">{{ participation.grouper }} </a></h3>
+      {% regroup participation.list by player as player_list %}
+      {% for player in player_list %}
+        <h4> - {{ player.grouper.first_name }} {{ player.grouper.last_name }}</h4>
+      {% endfor %}
   {% endfor %}
+  {% endcomment %}
+    {% for tournament in tournaments %}
+        <h2> <a class="article-title" href="{% url 'tournament_detail' tournament.id %}"> {{ tournament.name }} </a></h2>
+        {% for participation in participations %}
+            {% if tournament.id == participation.tournament.id %}
+                <h4> - {{ participation.player.first_name }} {{ participation.player.last_name }}</h4>
+            {% endif %}
+        {% endfor %}
+
+    {% endfor %}
 {% elif  user.is_authenticated and not user.is_staff %}
     Here you sign up for possible tournaments <br>
-    {% for tournament in tournaments %}
-        <h1>{{ tournament.name }}</h1>
-        <h1>{{ tournament.description }}</h1>
-    {% endfor %}
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>Description</td>
+        </tr>
+        {% for tournament in tournaments %}
+            <tr>
+                <td> <a class="article-title" href="{% url 'tournament_detail' tournament.id %}"> {{ tournament.name }} </a></td>
+                <td> - {{ tournament.description }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endif %}
 {% endblock %}
