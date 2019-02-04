@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DeleteView, CreateView, DetailView, UpdateView
 from tournaments.models import Tournament
 from participations.models import Participation
+from users.models import CustomUser
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 #context = {'tournaments': Tournament.objects.all().order_by('-tourn_date'), 'participations': Participation.objects.all()}
 
@@ -68,6 +69,18 @@ class TournamentDeleteView(LoginRequiredMixin, DeleteView):
             if self.request.user == tournament.author:
                 return True
             return False"""
+
+class TournamentParticipantsView(LoginRequiredMixin, ListView):
+    template_name = 'tournament_participants.html'
+    context_object_name = 'users'
+
+    def get_queryset(self):
+        return CustomUser.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(TournamentParticipantsView, self).get_context_data(**kwargs)
+        context['participations'] = Participation.objects.filter(tournament=self.kwargs.get('pk'))
+        return context
 
 class ParticipationCreateView(LoginRequiredMixin, CreateView):
     model = Participation

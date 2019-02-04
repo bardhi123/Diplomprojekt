@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_staff%}
+ <h2> Here are all the players participating in the tournament</h2>
+    {% for player in users %}
+        {% for participation in participations %}
+            {% if player == participation.player %}
+                <h4> - {{ player.first_name }} {{ player.last_name }} said will participate on {{ participation.date_joined }}, with the handicap of {{ participation.handicap }}</h4>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+{% endblock %}

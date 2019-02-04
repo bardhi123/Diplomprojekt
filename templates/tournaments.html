@@ -15,12 +15,13 @@
   {% endcomment %}
     {% for tournament in tournaments %}
         <h2> <a class="article-title" href="{% url 'tournament_detail' tournament.id %}"> {{ tournament.name }} </a></h2>
+        {% comment %}
         {% for participation in participations %}
             {% if tournament.id == participation.tournament.id %}
                 <h4> - {{ participation.player.first_name }} {{ participation.player.last_name }}</h4>
             {% endif %}
         {% endfor %}
-
+        {% endcomment %}
     {% endfor %}
 {% elif  user.is_authenticated and not user.is_staff %}
     <h1>Here you sign up for possible tournaments</h1>
