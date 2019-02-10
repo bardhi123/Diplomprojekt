@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    #'crispy_forms'
+    'crispy_forms',
 
     # 3rd party
     'allauth',
@@ -148,6 +148,7 @@ USE_L10N = True
 USE_TZ = True
 
 LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'account_login'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
 
 # Static files (CSS, JavaScript, Images)
@@ -155,4 +156,7 @@ ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
 
 STATIC_URL = '/static/'
 
-# CRIPSY_TEMPLATE_PACK = 'bootstrap4'
+CRIPSY_TEMPLATE_PACK = 'bootstrap4'
+
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_URL = '/media/'

@@ -1,6 +1,8 @@
 from django.urls import path
-
+from django.conf import settings
+from django.conf.urls.static import static
 from .views import (home,
+                    profile,
                     TournamentDetailView,
                     TournamentListView,
                     TournamentCreateView,
@@ -13,6 +15,7 @@ from .views import (home,
 
 urlpatterns = [
     path('', home, name='home'),
+    path('profile/', profile, name='profile'),
     path('tournaments/', TournamentListView.as_view(), name='tournaments'),
     path('tournaments/new/', TournamentCreateView.as_view(), name='tournament_create'),
     path('tournaments/<int:pk>/', TournamentDetailView.as_view(), name='tournament_detail'),
@@ -23,3 +26,6 @@ urlpatterns = [
     path('tournaments/<int:pk>/quit', ParticipationDeleteView.as_view(), name='participation_delete'),
     path('tournaments/<int:pk>/changeHC', ParticipationUpdateView.as_view(), name='participation_update'),
 ]
+
+#if settings.DEBUG:
+ #   urlpatterns += static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

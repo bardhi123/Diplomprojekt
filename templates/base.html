@@ -26,9 +26,12 @@
                 <a class="navbar-brand" href="{% url 'tournaments' %}">Tournaments</a>
                 <a class="navbar-brand" href="{% url 'tournament_create' %}">New Tournament</a>
                 <a class="navbar-brand" href="{% url 'account_logout' %}">Sign out</a>
+                <a class="navbar-brand" href="{% url 'profile' %}">Profile</a>
             {% elif user.is_authenticated %}
                 <a class="navbar-brand" href="{% url 'account_logout' %}">Sign out</a>
                 <a class="navbar-brand" href="{% url 'tournaments' %}">Tournaments</a>
+                <a class="navbar-brand" href="{% url 'profile' %}">Profile</a>
+
             {% else %}
                 <a class="navbar-brand" href="{% url 'account_login' %}">Login</a>
                 <a class="navbar-brand" href="{% url 'account_signup' %}">Sign Up</a>

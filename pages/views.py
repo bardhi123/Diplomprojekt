@@ -1,5 +1,6 @@
+from django.contrib import messages
 from django.views.generic import TemplateView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from pages.decorators import club_required, player_required
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -7,12 +8,27 @@ from django.views.generic import ListView, DeleteView, CreateView, DetailView, U
 from tournaments.models import Tournament
 from participations.models import Participation
 from users.models import CustomUser
+from users.forms import CustomUserChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 #context = {'tournaments': Tournament.objects.all().order_by('-tourn_date'), 'participations': Participation.objects.all()}
 
 # @method_decorator(club_required, name='dispatch')
 def home(request):
     return render(request, 'home.html')
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        u_form = CustomUserChangeForm(request.POST, instance=request.user)
+
+        if u_form.is_valid():
+            u_form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect('profile')
+    else:
+        u_form = CustomUserChangeForm(instance=request.user)
+    context = { 'u_form': u_form}
+    return render(request, 'account/profile.html', context)
 
 class TournamentListView(LoginRequiredMixin, ListView):
     template_name = 'tournaments.html'
