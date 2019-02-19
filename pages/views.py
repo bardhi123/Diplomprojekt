@@ -34,6 +34,7 @@ class TournamentListView(LoginRequiredMixin, ListView):
     template_name = 'tournaments.html'
     context_object_name = 'tournaments'
 
+
     def get_queryset(self):
         return Tournament.objects.all().order_by('-tourn_date')
 
