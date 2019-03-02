@@ -4,6 +4,7 @@ from random import randint
 from django.conf import settings
 from django.core.exceptions import ValidationError
 
+from participations.models import Participation
 from tournaments.models import Tournament
 
 
@@ -18,10 +19,10 @@ def invoke_algorithm(tournament_id, test=False):
 
         # Get all participating players for the tournament
         instance = Tournament.objects.get(id=tournament_id)
-        participations = instance.participations
+        participations = Participation.objects.filter(tournament=instance.id)
         players = [p.player for p in participations]
 
-        return instance, players
+        return instance, players, participations
 
     def _get_test_input():
 
@@ -30,15 +31,15 @@ def invoke_algorithm(tournament_id, test=False):
             p = type('', (object,), {"hcp": randint(0, 45)})()
             players.append(p)
 
-        return None, players
+        return None, players, None
 
     if test:
-        instance, players = _get_test_input()
+        instance, players, participations = _get_test_input()
     else:
-        instance, players = _get_input()
+        instance, players, participations = _get_input()
 
     # Prepare and validate input data set
-    hcps = [p.hcp for p in players]
+    hcps = [p.handicap for p in participations]
     num_players = len(hcps)
     num_teams = int(num_players / 4)
 

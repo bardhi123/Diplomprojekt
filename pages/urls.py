@@ -34,5 +34,7 @@ urlpatterns = [
  #   urlpatterns += static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
 
 # call the algorithm at startup for testing purposes
-response = invoke_algorithm(None, True)
+response = invoke_algorithm(7, False)
 print(response)
+
+print('babababbababb')
