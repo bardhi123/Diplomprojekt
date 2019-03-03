@@ -89,14 +89,15 @@ class TournamentDeleteView(LoginRequiredMixin, DeleteView):
 
 class TournamentParticipantsView(LoginRequiredMixin, ListView):
     template_name = 'tournament_participants.html'
-    context_object_name = 'users'
+    context_object_name = 'tournament'
 
     def get_queryset(self):
-        return CustomUser.objects.all()
+        return Tournament.objects.filter(id=self.kwargs.get('pk')).first()
 
     def get_context_data(self, **kwargs):
         context = super(TournamentParticipantsView, self).get_context_data(**kwargs)
         context['participations'] = Participation.objects.filter(tournament=self.kwargs.get('pk'))
+        context['users'] = CustomUser.objects.all()
         return context
 
 class ParticipationCreateView(LoginRequiredMixin, CreateView):

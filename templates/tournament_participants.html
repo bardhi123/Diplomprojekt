@@ -10,5 +10,7 @@
             {% endif %}
         {% endfor %}
     {% endfor %}
+
+    <a class= "btn btn-outline-secondary" href="{% url 'tournament_detail' tournament.id%}">Go back</a>
 {% endif %}
 {% endblock %}
