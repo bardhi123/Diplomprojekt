@@ -14,6 +14,8 @@ docker build . -t diplomprojekt
 ## Run Image
 ```
 docker run -d --rm -p 8000:8000 diplomprojekt
+OR
+docker-compose up
 ```
 
 ## Point Browser to

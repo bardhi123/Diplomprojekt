@@ -14,7 +14,8 @@ from .views import (home,
                     TournamentParticipantsView,
                     ParticipationCreateView,
                     ParticipationDeleteView,
-                    ParticipationUpdateView)
+                    ParticipationUpdateView,
+                    Teams)
 
 urlpatterns = [
     path('', home, name='home'),
@@ -28,6 +29,7 @@ urlpatterns = [
     path('tournaments/<int:pk>/participate', ParticipationCreateView.as_view(), name='participation_form'),
     path('tournaments/<int:pk>/quit', ParticipationDeleteView.as_view(), name='participation_delete'),
     path('tournaments/<int:pk>/changeHC', ParticipationUpdateView.as_view(), name='participation_update'),
+    path('tournaments/<int:pk>/test', Teams.as_view(), name='test')
 ]
 
 #if settings.DEBUG:
@@ -35,6 +37,8 @@ urlpatterns = [
 
 # call the algorithm at startup for testing purposes
 response = invoke_algorithm(7, False)
-print(response)
+print(response.get('teams'))
+
 
 print('babababbababb')
+print(response)
