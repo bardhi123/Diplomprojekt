@@ -110,7 +110,7 @@ ACCOUNT_SIGNUP_FORM_CLASS = 'users.forms.SignupForm'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'database/db.sqlite3'),
     }
 }
 
@@ -160,3 +160,6 @@ CRIPSY_TEMPLATE_PACK = 'bootstrap4'
 
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #MEDIA_URL = '/media/'
+
+# Path to algorithm
+PATH = os.path.join(BASE_DIR, 'ga.so')

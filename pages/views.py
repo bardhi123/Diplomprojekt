@@ -10,6 +10,7 @@ from participations.models import Participation
 from users.models import CustomUser
 from users.forms import CustomUserChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from tournaments.algorithm import invoke_algorithm
 #context = {'tournaments': Tournament.objects.all().order_by('-tourn_date'), 'participations': Participation.objects.all()}
 
 # @method_decorator(club_required, name='dispatch')
@@ -100,6 +101,25 @@ class TournamentParticipantsView(LoginRequiredMixin, ListView):
         context['users'] = CustomUser.objects.all()
         return context
 
+class Teams(LoginRequiredMixin, ListView):
+    template_name = 'test.html'
+    context_object_name = 'tournament'
+
+    def get_queryset(self):
+        return Tournament.objects.filter(id=self.kwargs.get('pk')).first()
+
+    def get_context_data(self, **kwargs):
+        context = super(Teams, self).get_context_data(**kwargs)
+        response = invoke_algorithm(self.kwargs.get('pk'))
+        context['teams'] = response.get('teams').items()
+        return context
+    """
+    response = invoke_algorithm(tourNum)
+    context2 = response.get('teams')
+    context = { 'players': response.get('teams').items(CustomUser)}
+
+    return render(request, 'test.html', context)
+"""
 class ParticipationCreateView(LoginRequiredMixin, CreateView):
     model = Participation
     template_name = 'participation_form.html'
