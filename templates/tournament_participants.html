@@ -11,7 +11,7 @@
         {% endfor %}
     {% endfor %}
 
-    <a class="btn btn-info btn-sm mt-1 mb-1" href="{% url 'test' tournament.id %}">Algorithm</a>
+    <a class="btn btn-info btn-sm mt-1 mb-1" href="{% url 'test' tournament.id %}">See teams</a>
     <a class= "btn btn-outline-secondary" href="{% url 'tournament_detail' tournament.id%}">Go back</a>
 {% endif %}
 {% endblock %}

@@ -102,7 +102,7 @@ class TournamentParticipantsView(LoginRequiredMixin, ListView):
         return context
 
 class Teams(LoginRequiredMixin, ListView):
-    template_name = 'test.html'
+    template_name = 'tournament_teams.html'
     context_object_name = 'tournament'
 
     def get_queryset(self):
@@ -111,14 +111,14 @@ class Teams(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(Teams, self).get_context_data(**kwargs)
         response = invoke_algorithm(self.kwargs.get('pk'))
-        context['teams'] = response.get('teams').items()
+        context['teams'] = response.get('teams').items();
         return context
     """
     response = invoke_algorithm(tourNum)
     context2 = response.get('teams')
     context = { 'players': response.get('teams').items(CustomUser)}
 
-    return render(request, 'test.html', context)
+    return render(request, 'tournament_teams.html', context)
 """
 class ParticipationCreateView(LoginRequiredMixin, CreateView):
     model = Participation
